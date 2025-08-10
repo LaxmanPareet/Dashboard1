@@ -7,7 +7,7 @@ import streamlit as st
 
 # -------- Config --------
 st.set_page_config(page_title="Unified Services Dashboard", layout="wide")
-DEFAULT_PATH = r"C:\Users\LaxmanPareet\Downloads\dashboard.xlsx"
+DEFAULT_PATH = r"E:\codes\dashboard.xlsx"
 
 MODULE_LABELS = {
     "AUGGOLDINVESTMENT": "Digital Gold",
