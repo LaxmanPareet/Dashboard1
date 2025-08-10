@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import io
 import os
 from typing import List, Optional
