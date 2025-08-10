@@ -165,20 +165,27 @@ if not os.path.exists(path):
 
 # Load data
 with st.spinner("Loading Excel file..."):
+<<<<<<< HEAD
     try:
         raw = load_excel_all_sheets(path)
         st.success(f"Successfully loaded Excel file with {len(raw)} rows")
     except Exception as e:
         st.error(f"Error loading Excel file: {str(e)}")
         st.stop()
+=======
+    raw = load_excel_all_sheets(path)
+>>>>>>> 16d97dc2692e6871ed7778622defdaffb435a954
 
 if raw.empty:
     st.warning("Excel appears to be empty or could not be loaded.")
     st.stop()
 
+<<<<<<< HEAD
 # Show initial data info
 st.info(f"📊 **Loaded {len(raw):,} total records from Excel file**")
 
+=======
+>>>>>>> 16d97dc2692e6871ed7778622defdaffb435a954
 # Find columns
 service_col = find_col(raw, ["servicename", "service_name", "service"])
 mobile_col = find_col(raw, ["mobile", "mobile_no", "mobile_number", "mobilenumber", "msisdn", "phone"])
@@ -252,12 +259,16 @@ q_utr = c4.text_input("UTR (contains)")
 # Apply filters
 filtered = df.copy()
 
+<<<<<<< HEAD
 # Apply module filter first
+=======
+>>>>>>> 16d97dc2692e6871ed7778622defdaffb435a954
 if selected_module:
     filtered = filtered[
         filtered[service_col].fillna("").astype(str).str.strip().str.upper() == selected_module.strip().upper()
     ]
 
+<<<<<<< HEAD
 # Apply date filter with memory optimization
 if start_dt and end_dt and date_col:
     try:
@@ -275,6 +286,13 @@ if start_dt and end_dt and date_col:
         st.warning(f"Date filtering error: {str(e)}")
 
 # Apply text filters
+=======
+if start_dt and end_dt and date_col:
+    ser = pd.to_datetime(filtered[date_col], errors="coerce")
+    mask = ser.isna() | ser.dt.date.between(start_dt, end_dt)
+    filtered = filtered[mask]
+
+>>>>>>> 16d97dc2692e6871ed7778622defdaffb435a954
 if mobile_col and q_mobile.strip():
     filtered = filtered[like_filter(filtered[mobile_col], q_mobile)]
 if cust_col and q_cust.strip():
@@ -285,6 +303,7 @@ if utr_col and q_utr.strip():
     filtered = filtered[like_filter(filtered[utr_col], q_utr)]
 
 # KPIs
+<<<<<<< HEAD
 # KPIs
 total_rows = len(filtered)
 success_rows = int(df["__success__"].sum()) if "__success__" in df.columns else 0  # from all data
@@ -298,6 +317,11 @@ with st.expander("Debug Information", expanded=False):
         st.write(f"**Selected module:** {selected_module}")
     if start_dt and end_dt:
         st.write(f"**Date range:** {start_dt} to {end_dt}")
+=======
+total_rows = len(filtered)
+success_rows = int(filtered["__success__"].sum()) if "__success__" in filtered.columns else 0
+fail_rows = total_rows - success_rows
+>>>>>>> 16d97dc2692e6871ed7778622defdaffb435a954
 
 k1, k2, k3 = st.columns(3)
 k1.metric("Total Records", f"{total_rows:,}")
